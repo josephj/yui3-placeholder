@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="">
+<meta name="created" content="2012-01-04">
+<title>Placeholder.js</title>
+<link rel="stylesheet" href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css">
+<link rel="stylesheet" href="http://yui.yahooapis.com/3.2.0/build/cssfonts/fonts-min.css">
+<script src="http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js"></script>
+<script src="placeholder.js"></script>
+<style>
+.placeholder {
+    color: red;
+}
+</style>
+</head>
+<body>
+    <form>
+        <input type="text" name="foo" id="foo" placeholder="Edit here..."><br>
+        <textarea name="bar" id="bar" placeholder="Edit here..."></textarea>
+        <input type="submit" value="Submit">
+    </form>
+    <script>
+    YUI().use("io-form", "placeholder", function (Y) {
+        Y.one("#foo").plug(Y.PlaceholderPlugin);
+        Y.one("#bar").plug(Y.PlaceholderPlugin);
+        Y.one("form").on("submit", function (e) {
+            e.preventDefault();
+            Y.one("#foo").placeholder.clear();
+            Y.one("#bar").unplug(Y.PlaceholderPlugin);
+            // Use Y.io._serialize to collect form data.
+            this.id = Y.guid();
+            this.setAttribute("id", this.id);
+            alert(Y.io._serialize(this));
+        });
+    });
+    </script>
+</body>
+</html>
